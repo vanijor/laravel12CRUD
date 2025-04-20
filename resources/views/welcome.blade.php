@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layouts.admin')
 @section('content')
     <div class="home">
         <h1>Bem Vindo ao Curso de Laravel!</h1>

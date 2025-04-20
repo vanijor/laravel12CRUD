@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Laravel</title>
 </head>
 
@@ -14,7 +14,7 @@
             <div class="content-header">
                 <h2 class="title-logo"><a href="{{ route('dashboard') }}">Curso Laravel</a></h2>
                 <ul class="list-nav-link">
-                    <li><a href="#" class="nav-link">Usuários</a></li>
+                    <li><a href="{{ route('users.index') }}" class="nav-link">Usuários</a></li>
                     <li><a href="{{ route('dashboard') }}" class="nav-link">Sair</a></li>
                 </ul>
             </div>

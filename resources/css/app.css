@@ -57,13 +57,57 @@
         @apply border p-2 w-full mt-1 rounded-md border-blue-100 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:outline-none;
     }
     /* Fim Formulários */
+    /* Início Tabela */
+    .table-container {
+        @apply overflow-x-auto bg-white shadow-md rounded-lg;
+    }
+    .table {
+        @apply min-w-full border-collapse w-full;
+    }
+    .table-header {
+        @apply bg-blue-400 text-white uppercase text-sm leading-normal;
+    }
+    .table-header th {
+        @apply py-3 px-6 text-left;
+    }
+    .table-header .center {
+        @apply text-center;
+    }
+    .table-body {
+        @apply bg-gray-700 text-sm font-light;
+    }
+    .table-row {
+        @apply border-b border-gray-200 hover:bg-blue-50 transition;
+    }
+    .table-cell {
+        @apply py-3 px-6;
+    }
+    .table-actions {
+        @apply py-3 px-6 text-center flex space-x-1;
+    }
+    /* Fim Tabela */
+
+    /* Inicio Paginação */
+    .pagination {
+        @apply mt-2 p-3;
+    }
+    /* Fim Paginação */
 
     /* Início Botões */
+    .btn-info {
+        @apply bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition-colors;
+    }
     .btn-primary {
         @apply bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors;
     }
     .btn-success {
         @apply bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors;
+    }
+    .btn-warning {
+        @apply bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition-colors;
+    }
+    .btn-danger {
+        @apply bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors;
     }
     /* Fim Botões */
 
@@ -83,4 +127,18 @@
     h1 {
         @apply text-xl font-bold mb-2;
     }
+    /* Inicio Detalhes do usuario */
+    .card {
+        @apply bg-white shadow-md rounded-lg p-6 flex flex-col items-center;
+    }
+    .card-title {
+        @apply text-xl font-semibold mb-4;
+    }
+    .card-content {
+        @apply text-gray-700;
+    }
+    .card-row {
+        @apply mb-1;
+    }
+    /* Fim Detalhes do usuario */
 }
