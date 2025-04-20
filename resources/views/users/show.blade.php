@@ -4,6 +4,7 @@
         <div class="content-title">
             <h1 class="page-title">Detalhes do Usuário</h1>
             <span class="flex space-x-1">
+                <a href="{{ route('users.generate-pdf', ['user' => $user->id]) }}" class="btn-success">Gerar PDF</a>
                 <a href="{{ route('users.index') }}" class="btn-info">Listar</a>
                 <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                 <a href="{{ route('users.edit-password', ['user' => $user->id]) }}" class="btn-warning">Editar Senha</a>
