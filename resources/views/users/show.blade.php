@@ -7,10 +7,10 @@
                 <a href="{{ route('users.index') }}" class="btn-info">Listar</a>
                 <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                 <a href="{{ route('users.edit-password', ['user' => $user->id]) }}" class="btn-warning">Editar Senha</a>
-                <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
+                <form id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
                     @csrf
                     @method('delete')
-                    <button class="btn-danger" type="submit" onclick="return confirm('Tem certeza que deseja apagar esse registro?')">Apagar</button>
+                    <button class="btn-danger" type="button" onclick="confirmDelete({{ $user->id }})">Apagar</button>
                 </form>
             </span>
         </div>
