@@ -11,13 +11,30 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     // Listar os usuários
-    public function index()
+    public function index(Request $request)
     {
         // Recuperar os registros do banco dados
-        $users = User::orderByDesc('id')->paginate(10);
+        // $users = User::orderByDesc('id')->paginate(10);
+        $users = User::when(
+            $request->filled('name'),
+            fn($query) =>
+                $query->whereLike('name', "%" . $request->name . '%')
+        )
+        ->when(
+            $request->filled('email'),
+            fn($query) =>
+            $query->whereLike('email', "%" . $request->email . '%')
+        )
+        ->orderByDesc('id')
+        ->paginate(10)
+        ->withQueryString();
 
         // Carregar a VIEW
-        return view('users.index', ['users' => $users]);
+        return view('users.index', [
+            'users' => $users,
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
     }
 
     // Detalhes do usuario

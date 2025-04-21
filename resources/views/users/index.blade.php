@@ -8,6 +8,16 @@
 
         <x-alert />
 
+        <form action="#" class="form-search">
+            <input type="text" name="name" class="form-input" placeholder="Pesquisar o nome" value="{{ $name }}">
+            <input type="text" name="email" class="form-input" placeholder="Pesquisar o email" value="{{ $email}}">
+
+            <div class="form-buttons">
+                <button type="submit" class="btn-success">Pesquisar</button>
+                <a href="{{ route('users.index') }}" class="btn-primary">Limpar</a>
+            </div>
+        </form>
+
         <div class="table-container">
             <table class="table">
                 <thead>
