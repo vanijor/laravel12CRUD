@@ -9,8 +9,14 @@
         <x-alert />
 
         <form action="#" class="form-search">
+            {{-- pesquisar nome e email --}}
             <input type="text" name="name" class="form-input" placeholder="Pesquisar o nome" value="{{ $name }}">
             <input type="text" name="email" class="form-input" placeholder="Pesquisar o email" value="{{ $email}}">
+
+            {{-- pesquisar entre datas --}}
+            <input type="datetime-local" name="start_date_registration" class="form-input"  value="{{ $start_date_registration }}">
+            <input type="datetime-local" name="end_date_registration" class="form-input"  value="{{ $end_date_registration }}">
+
 
             <div class="form-buttons">
                 <button type="submit" class="btn-success">Pesquisar</button>
