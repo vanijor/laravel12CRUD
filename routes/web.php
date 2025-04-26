@@ -22,3 +22,5 @@ Route::put('/update-user-password/{user}', [UserController::class, 'updatePasswo
 Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('/generate-pdf-user/{user}', [UserController::class, 'generatePdf'])->name('users.generate-pdf');
+
+Route::get('/generate-pdf-user', [UserController::class, 'generatePdfUsers'])->name('users.generate-pdf-users');

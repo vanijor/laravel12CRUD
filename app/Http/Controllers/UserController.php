@@ -19,26 +19,26 @@ class UserController extends Controller
         $users = User::when(
             $request->filled('name'),
             fn($query) =>
-                $query->whereLike('name', "%" . $request->name . '%')
+            $query->whereLike('name', "%" . $request->name . '%')
         )
-        ->when(
-            $request->filled('email'),
-            fn($query) =>
+            ->when(
+                $request->filled('email'),
+                fn($query) =>
                 $query->whereLike('email', "%" . $request->email . '%')
-        )
-        ->when(
-            $request->filled('start_date_registration'),
-            fn($query) =>
+            )
+            ->when(
+                $request->filled('start_date_registration'),
+                fn($query) =>
                 $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
-        )
-        ->when(
-            $request->filled('end_date_registration'),
-            fn($query) =>
+            )
+            ->when(
+                $request->filled('end_date_registration'),
+                fn($query) =>
                 $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
-        )
-        ->orderByDesc('id')
-        ->paginate(7)
-        ->withQueryString();
+            )
+            ->orderByDesc('id')
+            ->paginate(7)
+            ->withQueryString();
 
         // Carregar a VIEW
         return view('users.index', [
@@ -171,5 +171,64 @@ class UserController extends Controller
 
         //Fazer o download do arquivo
         return $pdf->download('view_user.pdf');
+    }
+    /* Gerar PDF da Lista */
+    public function generatePdfUsers(Request $request)
+    {
+        try {
+            // Recuperar os registros do banco dados
+            $users = User::when(
+                $request->filled('name'),
+                fn($query) =>
+                $query->whereLike('name', "%" . $request->name . '%')
+            )
+                ->when(
+                    $request->filled('email'),
+                    fn($query) =>
+                    $query->whereLike('email', "%" . $request->email . '%')
+                )
+                ->when(
+                    $request->filled('start_date_registration'),
+                    fn($query) =>
+                    $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+                )
+                ->when(
+                    $request->filled('end_date_registration'),
+                    fn($query) =>
+                    $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+                )
+                ->orderByDesc('name')
+                ->get();
+
+            //Somar total de regitros
+            $totalRecords = $users->count('id');
+
+            //Verifica se a quantidade de registros ultrapassa o limite para gerar PDF
+            $numberRecordsAllowed = 20;
+            if ($totalRecords > $numberRecordsAllowed) {
+                // Redirecionar o usuário, enviar a mensagem de erro
+                return redirect()->route('users.index', [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'start_date_registration' => $request->start_date_registration,
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', "Limite de registros ultrapassado para gerar PDF. O limite é de $numberRecordsAllowed registros!");
+            }
+
+            //Carregar a string com o HTML/conteúdo e determinar a orintação e o tamanho do arquivo
+            $pdf = Pdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');
+
+            // Fazer o download do arquivo
+            return $pdf->download('listar_usuarios.pdf');
+        } catch (Exception $e) {
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('users.index', [
+                'name' => $request->name,
+                'email' => $request->email,
+                'start_date_registration' => $request->start_date_registration,
+                'end_date_registration' => $request->end_date_registration
+            ])->with('error', 'PDF não gerado!');
+        }
     }
 }
